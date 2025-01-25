@@ -6,7 +6,10 @@ import path from "path"
 export default defineConfig({
   plugins: [react()],
 
-  base: '/members_prayers_hbc/', // for GitHub Pages
+  base: '/', // for GitHub Pages
+  build:{
+    outDir: 'dist',
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
