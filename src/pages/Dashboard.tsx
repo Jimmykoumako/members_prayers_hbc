@@ -1,18 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { supabase } from '../lib/supabase';
 import { Users, Calendar, Activity, HandHeart } from 'lucide-react';
 
+// Define interfaces for the data structures
+interface DashboardStats {
+  totalMembers: number;
+  activePrayers: number;
+  permanentPrayers: number;
+  answeredPrayers: number;
+}
+
+interface Member {
+  first_name: string;
+  last_name: string;
+}
+
+interface PrayerRequest {
+  id: string;
+  title: string;
+  status: 'active' | 'in_progress' | 'answered';
+  created_at: string;
+  member: Member;
+  is_permanent: boolean;
+}
+
 export default function Dashboard() {
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<DashboardStats>({
     totalMembers: 0,
     activePrayers: 0,
     permanentPrayers: 0,
     answeredPrayers: 0
   });
-  const [recentPrayers, setRecentPrayers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [recentPrayers, setRecentPrayers] = useState<PrayerRequest[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchDashboardData();
@@ -20,7 +41,7 @@ export default function Dashboard() {
 
   async function fetchDashboardData() {
     try {
-      // Fetch statistics
+      // Type the database responses
       const { data: members } = await supabase
         .from('members')
         .select('id');

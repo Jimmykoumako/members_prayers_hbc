@@ -13,20 +13,39 @@ import {
 import { Badge } from "../components/ui/badge";
 import { MemberForm } from './MemberForm';
 
+interface Member {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string | null;
+  phone: string | null;
+  role: 'admin' | 'manager' | 'member';
+  attendance_status: 'active' | 'inactive' | 'visitor';
+}
+
+interface FormData {
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phone?: string;
+  role: Member['role'];
+  attendance_status: Member['attendance_status'];
+}
+
 export default function Members() {
   const { user } = useAuth();
-  const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
   useEffect(() => {
     checkRole();
     fetchMembers();
   }, [user]);
 
-  const checkRole = async () => {
+  const checkRole = async (): Promise<void> => {
     if (!user) return;
     try {
       const { data, error } = await supabase
@@ -42,7 +61,7 @@ export default function Members() {
     }
   };
 
-  const fetchMembers = async () => {
+  const fetchMembers = async (): Promise<void> => {
     try {
       const { data, error } = await supabase
         .from('members')
@@ -58,7 +77,7 @@ export default function Members() {
     }
   };
 
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (formData: FormData): Promise<void> => {
     try {
       if (selectedMember) {
         const { error } = await supabase
@@ -133,7 +152,7 @@ export default function Members() {
                     {member.attendance_status}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-right">
+                {isAdmin && (<TableCell className="text-right">
                   <Button
                     variant="ghost"
                     onClick={() => {
@@ -143,7 +162,7 @@ export default function Members() {
                   >
                     Edit
                   </Button>
-                </TableCell>
+                </TableCell>)}
               </TableRow>
             ))}
           </TableBody>
