@@ -9,8 +9,8 @@ export default defineConfig({
   base: '/members_prayers_hbc/', // for GitHub Pages
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+      "@": path.resolve(__dirname, "./src")
+    }
   },
 })
 
