@@ -53,7 +53,7 @@ function Layout() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link to="/" className="text-xl font-bold text-gray-900">
-                Church Prayer App
+                Church Prayer
               </Link>
               <div className="hidden md:flex md:items-center md:ml-6 space-x-4">
                 <NavLinks />
