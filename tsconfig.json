@@ -10,5 +10,8 @@
       "@/*": ["./src/*"]
     },
     "allowJs": true
-  }
+  },
+  "exclude": [
+    "./dist/**/*" // This is what fixed it!
+  ]
 }
