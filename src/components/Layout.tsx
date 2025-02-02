@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "../components/ui/sheet";
 import { Menu } from "lucide-react";
+import {Toaster} from "sonner";
 
 function Layout() {
   const { user, signOut } = useAuth();
@@ -100,6 +101,7 @@ function Layout() {
       <main className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
         <Outlet />
       </main>
+      <Toaster/>
     </div>
   );
 }
