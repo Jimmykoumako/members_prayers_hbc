@@ -26,6 +26,20 @@ interface EmergencyContact {
   relationship: string;
 }
 
+interface Member {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string | null;
+  phone: string | null;
+  role: 'admin' | 'manager' | 'member';
+  attendance_status: 'active' | 'inactive' | 'visitor';
+  ministry?: string[];
+  join_date?: string;
+  created_at?: string;
+}
+
+
 interface MemberData {
   id?: string;
   first_name: string;
@@ -47,7 +61,7 @@ interface MemberData {
 interface MemberFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSuccess?: () => void;
+  onSuccess?: (formData: FormData) => (formData: FormData) => Promise<void>;
   initialData?: Partial<MemberData>;
   isEditing?: boolean;
 }

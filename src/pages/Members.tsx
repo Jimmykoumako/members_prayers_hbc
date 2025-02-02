@@ -433,7 +433,7 @@ export default function Members() {
                 setSelectedMember(null);
               }
             }}
-            onSubmit={handleSubmit}
+            onSuccess={handleSubmit}
             initialData={selectedMember}
             isEditing={!!selectedMember}
         />
